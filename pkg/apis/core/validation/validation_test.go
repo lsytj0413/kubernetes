@@ -14655,6 +14655,34 @@ func TestValidateResourceQuota(t *testing.T) {
 			errDetail:                "unsupported scope",
 			disableNamespaceSelector: true,
 		},
+		"priority-scope with ephemeral-storage and scope selector": {
+			rq: core.ResourceQuota{
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      "abc",
+					Namespace: "foo",
+				},
+				Spec: core.ResourceQuotaSpec{
+					Hard: core.ResourceList{
+						core.ResourceRequestsEphemeralStorage: resource.MustParse("100m"),
+					},
+					ScopeSelector: scopeSelectorSpec.ScopeSelector,
+				},
+			},
+		},
+		"priority-scope with ephemeral-storage and scope": {
+			rq: core.ResourceQuota{
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      "abc",
+					Namespace: "foo",
+				},
+				Spec: core.ResourceQuotaSpec{
+					Hard: core.ResourceList{
+						core.ResourceRequestsEphemeralStorage: resource.MustParse("100m"),
+					},
+					Scopes: []core.ResourceQuotaScope{core.ResourceQuotaScopePriorityClass},
+				},
+			},
+		},
 	}
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {

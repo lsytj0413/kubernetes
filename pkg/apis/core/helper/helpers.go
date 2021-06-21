@@ -139,6 +139,9 @@ var podComputeQuotaResources = sets.NewString(
 	string(core.ResourceLimitsMemory),
 	string(core.ResourceRequestsCPU),
 	string(core.ResourceRequestsMemory),
+	string(core.ResourceEphemeralStorage),
+	string(core.ResourceRequestsEphemeralStorage),
+	string(core.ResourceLimitsEphemeralStorage),
 )
 
 // IsResourceQuotaScopeValidForResource returns true if the resource applies to the specified scope
